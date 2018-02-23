@@ -10,7 +10,12 @@ const taskInput = document.querySelector('#task');
 loadEventListeners();
 
 function loadEventListeners() {
+    // Add task event
     form.addEventListener('submit', addTask);
+    // Remove task event
+    taskList.addEventListener('click', removeTask);
+    // Clear task event
+    clearBtn.addEventListener('click', clearTasks);
 }
 
 // Add task
@@ -18,7 +23,7 @@ function loadEventListeners() {
 function addTask(e) {
     if(taskInput.value === '') {
         alert('Enter the task');
-    }
+    } else {
 
     // Create li element 
     const li = document.createElement('li');
@@ -33,12 +38,28 @@ function addTask(e) {
     // Add icon html
     link.innerHTML = '<i class="fa fa-remove"></i>';
     // Append the link to li
-    li.appendChild(link);
-
+    li.appendChild(link); 
     // Append li to ul
     taskList.appendChild(li);
     // Clear input
     taskInput.value = '';
-     
+    
+    }
+    e.preventDefault();
+}
+
+// Remove task
+
+function removeTask(e) {
+    if(e.target.parentElement.classList.contains('delete-item')) {
+        e.target.parentElement.parentElement.remove();
+    }
+}
+
+function clearTasks(e) {
+    
+    while(taskList.firstChild) {
+        taskList.removeChild(taskList.firstChild);
+    }
     e.preventDefault();
 }
